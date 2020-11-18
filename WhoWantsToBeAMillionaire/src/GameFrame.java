@@ -1,4 +1,3 @@
-
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -6,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -28,9 +28,10 @@ public class GameFrame extends javax.swing.JFrame {
     Question currentQuestion;
     int hints_count = 0;
     boolean rightOnMistakes = false;
+    int Rewards;
     
     
-    public GameFrame() {
+    public GameFrame() {        
         initComponents();
         ReadFile();
         startGame();
@@ -78,19 +79,51 @@ public class GameFrame extends javax.swing.JFrame {
         for(JButton btn: btns)
             btn.setEnabled(true);
         
-        Level++;
-        currentQuestion = GetQuestion(Level);
-        ShowQuestion(currentQuestion);        
-        lstLevel.setSelectedIndex(lstLevel.getModel().getSize()-Level);
+        if (Level<15)
+        {
+            Level++;
+            currentQuestion = GetQuestion(Level);
+            ShowQuestion(currentQuestion);        
+            lstLevel.setSelectedIndex(lstLevel.getModel().getSize()-Level);   
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Вы выиграли игру!\nВаш выигрыш составил 3 000 000 рублей!!!\nПоздравляем!!!");
+            startGame();
+        }
     }
     
     private void startGame()
     {
+        //JOptionPane.showMessageDialog(null, new ChoosingANonCombustibleAmount());          
+//        ChoosingANonCombustibleAmount form = new ChoosingANonCombustibleAmount();
+//        form.setVisible(true);          
+        
+        Scanner in = new Scanner(System.in);
+        System.out.println("Введите несгораемую сумму: ");
+        Rewards = in.nextInt();   
+        
+        selectReward();
+        
         Level = 0;
         hints_count = 0;
         EnabledAllHints(true);
         NextStep();
     }  
+    
+    //хотел, чтобы несгораемая сумма была выделена, не удалось
+    private void selectReward()
+    {
+        for (int i=0; i<lstLevel.getModel().getSize(); i++)
+        {
+            String s = lstLevel.getModel().getElementAt(i).replaceAll(" ", "");
+            if (Rewards == Integer.parseInt(s))
+            {                
+                lstLevel.setSelectedIndex(i); 
+                break;
+            }
+        }   
+    }
+    
     
     
     /**
@@ -116,6 +149,7 @@ public class GameFrame extends javax.swing.JFrame {
         lstLevel = new javax.swing.JList<>();
         btnTheRightToMakeMistakes = new javax.swing.JButton();
         btnChangeQuestion = new javax.swing.JButton();
+        showRight = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,6 +171,11 @@ public class GameFrame extends javax.swing.JFrame {
 
         btnGetMoney.setText("Забрать деньги");
         btnGetMoney.setName("btnGetMoney"); // NOI18N
+        btnGetMoney.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetMoneyActionPerformed(evt);
+            }
+        });
 
         btnFiftyFifty.setText("50/50");
         btnFiftyFifty.setName("btnFiftyFifty"); // NOI18N
@@ -149,7 +188,7 @@ public class GameFrame extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/newpackage/picture.jpg"))); // NOI18N
         jLabel1.setToolTipText("");
 
-        lblQuestionText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblQuestionText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblQuestionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuestionText.setText("lblQuestionText");
         lblQuestionText.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -202,6 +241,7 @@ public class GameFrame extends javax.swing.JFrame {
         });
         lstLevel.setName("lstLevel"); // NOI18N
         lstLevel.setRequestFocusEnabled(false);
+        lstLevel.setSelectionBackground(new java.awt.Color(0, 0, 255));
         jScrollPane2.setViewportView(lstLevel);
         lstLevel.getAccessibleContext().setAccessibleName("lstLevel");
 
@@ -221,6 +261,13 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        showRight.setText("показать верный ответ");
+        showRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showRightActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -228,30 +275,31 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAnswer1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAnswer3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAnswer4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAnswer2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGetMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnFiftyFifty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCallFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnHallHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnChangeQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1))
-                        .addGap(56, 56, 56)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(60, 60, 60))
+                    .addComponent(btnGetMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFiftyFifty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCallFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHallHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnChangeQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(189, 189, 189)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAnswer1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnswer3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAnswer4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnswer2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(showRight)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,9 +321,11 @@ public class GameFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnChangeQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(btnGetMoney)
-                        .addGap(12, 12, 12)
-                        .addComponent(lblQuestionText, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGetMoney)))
+                .addGap(12, 12, 12)
+                .addComponent(lblQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAnswer1)
@@ -283,8 +333,12 @@ public class GameFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAnswer3)
-                            .addComponent(btnAnswer4))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                            .addComponent(btnAnswer4))
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showRight)
+                        .addGap(49, 49, 49))))
         );
 
         lblQuestionText.getAccessibleContext().setAccessibleDescription("");
@@ -292,27 +346,31 @@ public class GameFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //выбор 1го ответа
     private void btnAnswer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer1ActionPerformed
         
         unswerToTheQuestion(evt); 
     }//GEN-LAST:event_btnAnswer1ActionPerformed
 
+    //выбор 2го ответа
     private void btnAnswer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer2ActionPerformed
         
         unswerToTheQuestion(evt);         
     }//GEN-LAST:event_btnAnswer2ActionPerformed
 
+    //выбор 3го ответа
     private void btnAnswer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer3ActionPerformed
         
         unswerToTheQuestion(evt);  
     }//GEN-LAST:event_btnAnswer3ActionPerformed
 
+    //выбор 4го ответа
     private void btnAnswer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer4ActionPerformed
             
         unswerToTheQuestion(evt);
     }//GEN-LAST:event_btnAnswer4ActionPerformed
     
-    //метод, вызывающийся при неверном ответе
+    //метод, вызывающийся при ответе
     private void unswerToTheQuestion(java.awt.event.ActionEvent evt)
     {
         if (currentQuestion.RightAnswer.equals(evt.getActionCommand()))
@@ -326,9 +384,14 @@ public class GameFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Вы ответили неверно, но у вас есть еще одна попытка!");
             rightOnMistakes = false;
         }
+        else if (Level > getLevelANonCombustibleAmount())
+        {
+            JOptionPane.showMessageDialog(this, "Ответ неверный, но вы получаете несгораемую сумму " + lstLevel.getModel().getElementAt(15-getLevelANonCombustibleAmount()) + " рублей!!!");
+            startGame();
+        }
         else
         {
-            JOptionPane.showMessageDialog(this, "Ответ неверный, игра окончена!");
+            JOptionPane.showMessageDialog(this, "Ответ неверный, вы проиграли игру.");
             startGame();
         }
     }
@@ -448,8 +511,60 @@ public class GameFrame extends javax.swing.JFrame {
         btnHallHelp.setEnabled(false);
     }//GEN-LAST:event_btnHallHelpActionPerformed
 
+    //просто так, чтоб показывало какой ответ правильный
+    private void showRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRightActionPerformed
+        
+        JButton[] btns = new JButton[]{btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4};
+        
+        for (int i=0; i<4; i++)
+        {
+            String ac = btns[i].getActionCommand();
+            
+            if (ac.equals(currentQuestion.RightAnswer))
+            {
+                JOptionPane.showMessageDialog(this, "Правильный ответ " + Integer.toString(i+1));
+                break;
+            }
+        }
+    }//GEN-LAST:event_showRightActionPerformed
+
+    //забрать деньги
+    private void btnGetMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetMoneyActionPerformed
+        // TODO add your handling code here:
+        int lev = getLevelANonCombustibleAmount();
+        
+        if (Level > lev)
+        {
+            JOptionPane.showMessageDialog(this, "Поздравляем, ваш выигрыш составил " + lstLevel.getModel().getElementAt(15-lev) + " рублей!!!");
+            startGame();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "К сожалению, вы не можете забрать деньги.");
+        }
+    }//GEN-LAST:event_btnGetMoneyActionPerformed
+
+    //получить уровень несгораемой суммы
+    private int getLevelANonCombustibleAmount()
+    {
+        int lev=0;
+        for (int i=0; i<lstLevel.getModel().getSize(); i++)
+        {
+            String s = lstLevel.getModel().getElementAt(i).replaceAll(" ", "");
+            if (Rewards == Integer.parseInt(s))
+            {                
+                //lstLevel.setSelectedIndex(i); 
+                lev=15-i;
+                break;
+            }
+        }  
+        return lev;
+    }
+    
+    //блокировка/разблокировка кнопок подсказок
     private void EnabledAllHints(boolean f)
     {
+        //если использованы уже 4 подсказки, то блокируем
         if (hints_count == 4)
         {
             btnFiftyFifty.setEnabled(f);
@@ -458,6 +573,7 @@ public class GameFrame extends javax.swing.JFrame {
             btnTheRightToMakeMistakes.setEnabled(f);
             btnChangeQuestion.setEnabled(f);
         }
+        //при новой игре разблокировка кнопок
         else if (f)
         {
             btnFiftyFifty.setEnabled(f);
@@ -500,6 +616,7 @@ public class GameFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GameFrame().setVisible(true);
+                //new ChoosingANonCombustibleAmount().setVisible(true);
             }
         });
     }
@@ -519,5 +636,6 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblQuestionText;
     private javax.swing.JList<String> lstLevel;
+    private javax.swing.JButton showRight;
     // End of variables declaration//GEN-END:variables
 }
