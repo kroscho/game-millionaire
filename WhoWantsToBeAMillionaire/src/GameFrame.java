@@ -29,9 +29,9 @@ public class GameFrame extends javax.swing.JFrame {
     int hints_count = 0;
     boolean rightOnMistakes = false;
     int Rewards;
+    boolean ok=false;
     
-    
-    public GameFrame() {        
+    public GameFrame() {         
         initComponents();
         ReadFile();
         startGame();
@@ -72,6 +72,7 @@ public class GameFrame extends javax.swing.JFrame {
         return list.get(rnd.nextInt(list.size()));
     }
     
+    //следующий шаг при верном ответе
     private void NextStep()
     {        
         JButton[] btns = new JButton[]{btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4};
@@ -92,22 +93,15 @@ public class GameFrame extends javax.swing.JFrame {
         }
     }
     
+    //начало игры
     private void startGame()
-    {
-        //JOptionPane.showMessageDialog(null, new ChoosingANonCombustibleAmount());          
-//        ChoosingANonCombustibleAmount form = new ChoosingANonCombustibleAmount();
-//        form.setVisible(true);          
-        
-        Scanner in = new Scanner(System.in);
-        System.out.println("Введите несгораемую сумму: ");
-        Rewards = in.nextInt();   
-        
-        selectReward();
-        
+    {              
+        cmbBoxSum.setEnabled(true);
+        btnOk.setEnabled(true);
+        EnabledAllFields(false);  
         Level = 0;
-        hints_count = 0;
-        EnabledAllHints(true);
-        NextStep();
+        hints_count = 0; 
+        JOptionPane.showMessageDialog(this, "Выберите несгораемую сумму!");
     }  
     
     //хотел, чтобы несгораемая сумма была выделена, не удалось
@@ -150,6 +144,9 @@ public class GameFrame extends javax.swing.JFrame {
         btnTheRightToMakeMistakes = new javax.swing.JButton();
         btnChangeQuestion = new javax.swing.JButton();
         showRight = new javax.swing.JButton();
+        cmbBoxSum = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        btnOk = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -268,6 +265,17 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        cmbBoxSum.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3 000 000", "1 500 000", "   800 000", "   400 000", "   200 000", "   100 000", "     50 000", "     25 000", "     15 000", "     10 000", "       5 000", "       3 000", "       2 000", "       1 000", "          500" }));
+
+        jLabel2.setText("Несгораемая сумма");
+
+        btnOk.setText("Ок");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -277,7 +285,7 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGetMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFiftyFifty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                     .addComponent(btnCallFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHallHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnChangeQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -287,7 +295,13 @@ public class GameFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(123, 123, 123))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbBoxSum, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnOk))
+                .addGap(29, 29, 29))
             .addGroup(layout.createSequentialGroup()
                 .addGap(189, 189, 189)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -306,24 +320,33 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnFiftyFifty, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnHallHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnFiftyFifty, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnHallHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnCallFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnChangeQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnCallFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnChangeQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnGetMoney)))
+                        .addGap(12, 12, 12)
+                        .addComponent(lblQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbBoxSum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGetMoney)))
-                .addGap(12, 12, 12)
-                .addComponent(lblQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                        .addComponent(btnOk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -544,6 +567,32 @@ public class GameFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGetMoneyActionPerformed
 
+    //при выборе несгораемой суммы
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        
+        Rewards = Integer.parseInt(cmbBoxSum.getSelectedItem().toString().replaceAll(" ", ""));
+        cmbBoxSum.setEnabled(false);
+        btnOk.setEnabled(false);
+        EnabledAllFields(true);               
+        NextStep();
+    }//GEN-LAST:event_btnOkActionPerformed
+
+    //блокировка/разблокировка всех полей
+    private void EnabledAllFields(boolean f)
+    {
+        btnFiftyFifty.setEnabled(f);
+        btnHallHelp.setEnabled(f);
+        btnCallFriend.setEnabled(f);
+        btnTheRightToMakeMistakes.setEnabled(f);
+        btnChangeQuestion.setEnabled(f);
+        btnAnswer1.setEnabled(f);
+        btnAnswer2.setEnabled(f);
+        btnAnswer3.setEnabled(f);
+        btnAnswer4.setEnabled(f);
+        btnGetMoney.setEnabled(f);
+        showRight.setEnabled(f);        
+    }
+    
     //получить уровень несгораемой суммы
     private int getLevelANonCombustibleAmount()
     {
@@ -631,8 +680,11 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnFiftyFifty;
     private javax.swing.JButton btnGetMoney;
     private javax.swing.JButton btnHallHelp;
+    private javax.swing.JButton btnOk;
     private javax.swing.JButton btnTheRightToMakeMistakes;
+    private javax.swing.JComboBox<String> cmbBoxSum;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblQuestionText;
     private javax.swing.JList<String> lstLevel;
