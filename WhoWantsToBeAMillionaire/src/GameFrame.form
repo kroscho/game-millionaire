@@ -24,25 +24,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnGetMoney" max="32767" attributes="0"/>
-                          <Component id="btnFiftyFifty" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnHallHelp" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnCallFriend" alignment="0" min="-2" pref="128" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblQuestionText" max="32767" attributes="0"/>
-                          <Component id="jLabel1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="140" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="btnAnswer1" min="-2" pref="267" max="-2" attributes="0"/>
                           <Component id="btnAnswer3" min="-2" pref="267" max="-2" attributes="0"/>
@@ -53,8 +37,26 @@
                           <Component id="btnAnswer2" min="-2" pref="244" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnGetMoney" max="32767" attributes="0"/>
+                          <Component id="btnFiftyFifty" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnTheRightToMakeMistakes" pref="144" max="32767" attributes="0"/>
+                          <Component id="btnCallFriend" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnHallHelp" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnChangeQuestion" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="lblQuestionText" max="32767" attributes="0"/>
+                          <Component id="jLabel1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="140" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="154" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,18 +68,22 @@
                   <Component id="jScrollPane2" min="-2" pref="309" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="btnFiftyFifty" min="-2" pref="37" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnHallHelp" min="-2" pref="37" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnCallFriend" min="-2" pref="37" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                              <Component id="btnGetMoney" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnTheRightToMakeMistakes" min="-2" pref="37" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnChangeQuestion" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="btnGetMoney" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="lblQuestionText" min="-2" pref="28" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -102,12 +108,18 @@
         <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x43c;&#x43e;&#x449;&#x44c; &#x437;&#x430;&#x43b;&#x430;"/>
         <Property name="name" type="java.lang.String" value="btnHallHelp" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHallHelpActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCallFriend">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x417;&#x432;&#x43e;&#x43d;&#x43e;&#x43a; &#x434;&#x440;&#x443;&#x433;&#x443;"/>
         <Property name="name" type="java.lang.String" value="btnCallFriend" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCallFriendActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGetMoney">
       <Properties>
@@ -230,5 +242,23 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnTheRightToMakeMistakes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41f;&#x440;&#x430;&#x432;&#x43e; &#x43d;&#x430; &#x43e;&#x448;&#x438;&#x431;&#x43a;&#x443;"/>
+        <Property name="name" type="java.lang.String" value="btnTheRightToMakeMistakes" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTheRightToMakeMistakesActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnChangeQuestion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x417;&#x430;&#x43c;&#x435;&#x43d;&#x430; &#x432;&#x43e;&#x43f;&#x440;&#x43e;&#x441;&#x430;"/>
+        <Property name="name" type="java.lang.String" value="btnChangeQuestion" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChangeQuestionActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
