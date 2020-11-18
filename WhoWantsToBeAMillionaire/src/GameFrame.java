@@ -226,9 +226,10 @@ public class GameFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(259, 259, 259)
+                        .addGap(130, 130, 130)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAnswer1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAnswer3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,26 +238,25 @@ public class GameFrame extends javax.swing.JFrame {
                             .addComponent(btnAnswer4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAnswer2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnGetMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnFiftyFifty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(btnTheRightToMakeMistakes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCallFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnHallHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnChangeQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1))
                         .addGap(56, 56, 56)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(154, 154, 154))
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(104, 104, 104)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -284,7 +284,7 @@ public class GameFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAnswer3)
                             .addComponent(btnAnswer4))))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         lblQuestionText.getAccessibleContext().setAccessibleDescription("");
@@ -424,14 +424,28 @@ public class GameFrame extends javax.swing.JFrame {
         //на все остальные ответы распределяем оставшиеся проценты голосов
         for (int i=0; i<4; i++)
         {
-            if (i!=right)
+            //если ответ последний и он неверный
+            if (i!=right && i==3)
+            {
+                ans[i] = 100-sum;                
+            }
+            //если ответ последний и он верный
+            else if (i==right && i==3)
+            {
+                ans[i-1] = 100-sum;
+            }
+            //если ответ неверный и не предпоследний
+            else if (i!=right && i!=2)
             {
                 ans[i] = 0.0 + (double)(Math.random()*(100-sum));
                 sum+=ans[i];
             }
-        }
+        } 
         
-        JOptionPane.showMessageDialog(this, "1: " + Double.toString(ans[0]) + "\n2: " + Double.toString(ans[1]) + "\n3: " + Double.toString(ans[2]) + "\n4: " + Double.toString(ans[3]), "Зал:", 1);
+        JOptionPane.showMessageDialog(this, "1: " + String.format("%.2f", ans[0]) + "\n2: " + String.format("%.2f", ans[1]) + "\n3: " + String.format("%.2f", ans[2]) + "\n4: " + String.format("%.2f", ans[3]), "Зал:", 1);
+        hints_count++;
+        EnabledAllHints(false);
+        btnHallHelp.setEnabled(false);
     }//GEN-LAST:event_btnHallHelpActionPerformed
 
     private void EnabledAllHints(boolean f)
