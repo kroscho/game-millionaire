@@ -1,11 +1,14 @@
+import java.sql.Statement;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -33,8 +36,49 @@ public class GameFrame extends javax.swing.JFrame {
     
     public GameFrame() {         
         initComponents();
-        ReadFile();
+        ReadBD();
+        //ReadFile();
         startGame();
+    }
+    
+    String driver = "org.apache.derby.jdbc.ClientDriver";
+    String url = "jdbc:derby://localhost:1527/question";
+    String user = "kros";
+    String pass = "kros";
+    
+    //подключение к бд и считывание данных с нее
+    private void ReadBD()
+    {
+        try{
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            //проверка подключения
+            /*if (!conn.isClosed()) {
+                JOptionPane.showMessageDialog(null, "Connected");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Close");
+            }*/
+            
+            Statement statmt = conn.createStatement();
+            String query = "SELECT * FROM KROS.QUESTION";
+
+            ResultSet resSet = statmt.executeQuery(query);
+
+
+            while (resSet.next()) {
+                String[] s = new String[]{resSet.getString(1), resSet.getString(2), resSet.getString(3), resSet.getString(4), resSet.getString(5), resSet.getString(6), resSet.getString(7)};
+                questions.add(new Question(s));        
+            }
+
+            resSet.close();
+            conn.close();
+
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+
     }
     
     //метод чтения вопросов из файла
